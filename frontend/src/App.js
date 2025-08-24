@@ -65,49 +65,6 @@ function App() {
     }
   }, [vendorId]);
 
-  // Chart.js verisine dönüştür
-  const chartData = {
-    labels: monthlyData.map(d => `${d._id.month}/${d._id.year}`),
-    datasets: [
-      {
-        label: "Toplam Satış (₺)",
-        data: monthlyData.map(d => parseFloat(d.totalSales.toFixed(2))),
-        fill: false,
-        backgroundColor: "rgb(59, 130, 246)",
-        borderColor: "rgb(59, 130, 246)",
-        tension: 0.1,
-        pointBackgroundColor: "rgb(59, 130, 246)",
-        pointBorderColor: "#fff",
-        pointBorderWidth: 2,
-        pointRadius: 5,
-      }
-    ]
-  };
-
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Aylık Satış Trendi'
-      }
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-        ticks: {
-          callback: function(value) {
-            return '₺' + value.toLocaleString('tr-TR');
-          }
-        }
-      }
-    }
-  };
-
   if (loading) {
     return (
       <div style={{ padding: "20px", textAlign: "center" }}>
