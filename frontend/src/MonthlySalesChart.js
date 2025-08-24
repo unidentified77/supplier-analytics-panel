@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import "./MonthlySalesChart.css";
 
 // Register Chart.js components
 ChartJS.register(
@@ -31,11 +32,11 @@ function MonthlySalesChart({ monthlyData, loading, error }) {
         label: "Toplam Satış (₺)",
         data: monthlyData.map(d => parseFloat(d.totalSales.toFixed(2))),
         fill: false,
-        backgroundColor: "rgb(59, 130, 246)",
-        borderColor: "rgb(59, 130, 246)",
-        tension: 0.1,
-        pointBackgroundColor: "rgb(59, 130, 246)",
-        pointBorderColor: "#fff",
+        backgroundColor: "rgba(14,165,233,0.95)",
+        borderColor: "rgba(14,165,233,0.95)",
+        tension: 0.15,
+        pointBackgroundColor: "#fff",
+        pointBorderColor: "rgba(14,165,233,0.95)",
         pointBorderWidth: 2,
         pointRadius: 5,
       }
@@ -48,27 +49,41 @@ function MonthlySalesChart({ monthlyData, loading, error }) {
     plugins: {
       legend: {
         position: 'top',
+        labels: { color: '#E6F6F9' }
       },
       title: {
         display: true,
-        text: 'Aylık Satış Trendi'
+        text: 'Aylık Satış Trendi',
+        color: '#E6F6F9',
+        font: { weight: '600', size: 16 }
+      },
+      tooltip: {
+        backgroundColor: '#0f172a',
+        titleColor: '#E6F6F9',
+        bodyColor: '#E6F6F9'
       }
     },
     scales: {
+      x: {
+        ticks: { color: '#cbd5e1' },
+        grid: { color: 'rgba(226,232,240,0.06)' }
+      },
       y: {
         beginAtZero: true,
         ticks: {
+          color: '#cbd5e1',
           callback: function(value) {
             return '₺' + value.toLocaleString('tr-TR');
           }
-        }
+        },
+        grid: { color: 'rgba(226,232,240,0.06)' }
       }
     }
   };
 
   if (loading) {
     return (
-      <div style={{ padding: "20px", textAlign: "center" }}>
+      <div className="ms-card ms-loading">
         <h2>Yükleniyor...</h2>
       </div>
     );
@@ -76,23 +91,23 @@ function MonthlySalesChart({ monthlyData, loading, error }) {
 
   if (error) {
     return (
-      <div style={{ padding: "20px", textAlign: "center", color: "red" }}>
+      <div className="ms-card ms-error">
         <h2>Hata</h2>
         <p>{error}</p>
-        <button onClick={() => window.location.reload()}>Tekrar Dene</button>
+        <button className="ms-retry" onClick={() => window.location.reload()}>Tekrar Dene</button>
       </div>
     );
   }
 
   return (
-    <div style={{ marginBottom: "50px" }}>
-      <h2 style={{ color: "#666", marginBottom: "20px" }}>Aylık Satış Grafiği</h2>
+    <div className="ms-card ms-container">
+      <h2 className="ms-title">Aylık Satış Grafiği</h2>
       {monthlyData.length > 0 ? (
-        <div style={{ height: "400px", marginBottom: "20px" }}>
+        <div className="ms-chartWrapper">
           <Line data={chartData} options={chartOptions} />
         </div>
       ) : (
-        <p style={{ textAlign: "center", color: "#666" }}>Grafik verisi bulunamadı.</p>
+        <p className="ms-empty">Grafik verisi bulunamadı.</p>
       )}
     </div>
   );

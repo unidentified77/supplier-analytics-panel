@@ -1,13 +1,137 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--text);
+  background:
+    radial-gradient(1200px 400px at 10% 10%, rgba(139,92,246,0.08), transparent 8%),
+    radial-gradient(1000px 300px at 90% 90%, rgba(6,182,212,0.06), transparent 10%),
+    linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 32px;
+  color-scheme: dark;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Global styles to give the whole page a modern, high-contrast look */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+:root{
+  --bg-1: #051025;
+  --bg-2: #07142a;
+  --accent-1: #06b6d4; /* cyan */
+  --accent-2: #8b5cf6; /* violet */
+  --muted: #9fbfcf;
+  --card-bg: rgba(7,18,30,0.6);
+  --glass-border: rgba(255,255,255,0.04);
+  --text: #e6f6f9;
+  --glass: rgba(255,255,255,0.02);
+  --shadow: 0 12px 30px rgba(2,6,23,0.7);
+}
+
+/* Base */
+* { box-sizing: border-box; }
+html,body,#root { height: 100%; }
+/* App container to center content and provide consistent spacing */
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 18px;
+  display: grid;
+  gap: 20px;
+}
+
+/* Headings */
+h1, h2, h3 {
+  margin: 0;
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+h1 { font-size: 26px; color: #c7f9ff; }
+h2 { font-size: 18px; color: #bff0ff; }
+
+/* Shared card baseline (components may extend/override) */
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--glass-border);
+}
+
+/* Buttons - used by components if class matches */
+button, .btn {
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  color: #071229;
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+  padding: 8px 12px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(11,92,154,0.12);
+  transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+}
+button:active { transform: translateY(1px); }
+button.ghost, .btn.ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--glass-border);
+  box-shadow: none;
+}
+
+/* Links */
+a { color: var(--accent-1); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Tables default improvements */
+table { font-size: 14px; border-collapse: collapse; }
+th, td { padding: 10px 12px; }
+
+/* Empty / muted text */
+.muted { color: var(--muted); }
+
+/* Nice scrollbar for desktop browsers */
+::-webkit-scrollbar { height: 10px; width: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+  body { padding: 18px; }
+  .app-container { padding: 12px; gap: 12px; }
+  h1 { font-size: 20px; }
+}
+
+/* Utility helpers */
+.flex { display: flex; }
+.center { display:flex; align-items:center; justify-content:center; }
+.space-between { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+.hidden { display:none !important; }
+
+/* Small helpers for components */
+.kpi {
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  padding:8px 12px;
+  border-radius:10px;
+  border:1px solid var(--glass-border);
+  color: var(--text);
+  font-size: 14px;
 }

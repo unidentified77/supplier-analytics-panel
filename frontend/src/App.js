@@ -79,7 +79,7 @@ function App() {
 
   return (
     <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h1 style={{ color: "#333", marginBottom: "30px" }}>Satış Analiz Paneli</h1>
+      <h1 style={{ color: "#FFF", marginBottom: "30px" }}>Satış Analiz Paneli</h1>
       
       {/* Chart Section */}
       <MonthlySalesChart monthlyData={monthlyData} loading={loading} error={error} />

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./ProductSalesTable.css";
 
 function ProductSalesTable({ productData }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -13,57 +14,24 @@ function ProductSalesTable({ productData }) {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div>
-      <h2 style={{ color: "#666", marginBottom: "20px" }}>Ürün Bazlı Satış Tablosu</h2>
+    <div className="pst-card">
+      <h2 className="pst-title">Ürün Bazlı Satış Tablosu</h2>
       {productData.length > 0 ? (
-        <div style={{ overflowX: "auto" }}>
-          <table style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            boxShadow: "0 2px 4px rgba(0,0,0,0.1)"
-          }}>
+        <div className="pst-tableWrapper">
+          <table className="pst-table">
             <thead>
-              <tr style={{ backgroundColor: "#f8f9fa" }}>
-                <th style={{
-                  border: "1px solid #dee2e6",
-                  padding: "12px",
-                  textAlign: "left",
-                  fontWeight: "600"
-                }}>Ürün</th>
-                <th style={{
-                  border: "1px solid #dee2e6",
-                  padding: "12px",
-                  textAlign: "right",
-                  fontWeight: "600"
-                }}>Toplam Satış Adedi</th>
-                <th style={{
-                  border: "1px solid #dee2e6",
-                  padding: "12px",
-                  textAlign: "right",
-                  fontWeight: "600"
-                }}>Toplam Gelir (₺)</th>
+              <tr>
+                <th className="pst-th left">Ürün</th>
+                <th className="pst-th right">Toplam Satış Adedi</th>
+                <th className="pst-th right">Toplam Gelir (₺)</th>
               </tr>
             </thead>
             <tbody>
               {currentItems.map((p, idx) => (
-                <tr key={idx} style={{
-                  backgroundColor: idx % 2 === 0 ? "#fff" : "#f8f9fa"
-                }}>
-                  <td style={{
-                    border: "1px solid #dee2e6",
-                    padding: "12px"
-                  }}>{p.productName}</td>
-                  <td style={{
-                    border: "1px solid #dee2e6",
-                    padding: "12px",
-                    textAlign: "right"
-                  }}>{p.totalQuantity.toLocaleString('tr-TR')}</td>
-                  <td style={{
-                    border: "1px solid #dee2e6",
-                    padding: "12px",
-                    textAlign: "right",
-                    fontWeight: "600"
-                  }}>₺{p.totalRevenue.toLocaleString('tr-TR', {
+                <tr key={idx} className={idx % 2 === 0 ? "pst-row pst-row-even" : "pst-row pst-row-odd"}>
+                  <td className="pst-td">{p.productName}</td>
+                  <td className="pst-td right">{p.totalQuantity.toLocaleString('tr-TR')}</td>
+                  <td className="pst-td right pst-revenue">₺{p.totalRevenue.toLocaleString('tr-TR', {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                   })}</td>
@@ -71,20 +39,14 @@ function ProductSalesTable({ productData }) {
               ))}
             </tbody>
           </table>
-          <div style={{ marginTop: "20px", textAlign: "center" }}>
+
+          <div className="pst-pagination">
             {[...Array(totalPages).keys()].map((number) => (
               <button
                 key={number + 1}
                 onClick={() => paginate(number + 1)}
-                style={{
-                  padding: "8px 15px",
-                  margin: "0 5px",
-                  border: "1px solid #ddd",
-                  borderRadius: "4px",
-                  backgroundColor: currentPage === number + 1 ? "#007bff" : "#f8f9fa",
-                  color: currentPage === number + 1 ? "#fff" : "#007bff",
-                  cursor: "pointer"
-                }}
+                className={`pst-pageBtn ${currentPage === number + 1 ? 'active' : ''}`}
+                aria-label={`Sayfa ${number + 1}`}
               >
                 {number + 1}
               </button>
@@ -92,7 +54,7 @@ function ProductSalesTable({ productData }) {
           </div>
         </div>
       ) : (
-        <p style={{ textAlign: "center", color: "#666" }}>Ürün verisi bulunamadı.</p>
+        <p className="pst-empty">Ürün verisi bulunamadı.</p>
       )}
     </div>
   );

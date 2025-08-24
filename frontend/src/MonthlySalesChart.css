@@ -1,0 +1,90 @@
+.ms-card {
+  background: linear-gradient(180deg, rgba(9,30,63,0.92) 0%, rgba(6,18,37,0.9) 100%);
+  color: #e6f6f9;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+  border: 1px solid rgba(99,102,241,0.08);
+  margin-bottom: 24px;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+.ms-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(3,7,20,0.7);
+}
+
+.ms-title {
+  color: #c7f9ff;
+  margin: 0 0 14px 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.ms-chartWrapper {
+  height: 400px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+/* Loading & error states */
+.ms-loading,
+.ms-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+  text-align: center;
+}
+
+.ms-loading h2 {
+  color: #9be7ff;
+  margin: 0;
+}
+
+.ms-error h2 {
+  color: #ffb4a2;
+  margin: 0 0 8px 0;
+}
+
+.ms-error p {
+  color: #ffd9d0;
+  margin: 0 0 12px 0;
+}
+
+/* Retry button */
+.ms-retry {
+  background: linear-gradient(90deg, #06b6d4 0%, #8b5cf6 100%);
+  color: #071229;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(11,92,154,0.2);
+  transition: transform 120ms ease, opacity 120ms ease;
+}
+
+.ms-retry:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+/* Empty text */
+.ms-empty {
+  color: #a9c6d2;
+  text-align: center;
+  padding: 28px 0;
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .ms-card { padding: 14px; border-radius: 10px; }
+  .ms-title { font-size: 16px; }
+  .ms-chartWrapper { height: 300px; }
+}
