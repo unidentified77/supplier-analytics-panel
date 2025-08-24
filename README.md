@@ -80,18 +80,3 @@ The dashboard will be available at `http://localhost:3000`.
 * **Product Sales Table:** Browse products with pagination. See total quantity sold and revenue per product.
 
 ---
-
-## Customization
-
-* Replace logos and branding in the `/frontend/assets` folder.
-* Adjust chart colors and table styling in the component files.
-
----
-
-## Notes
-
-* Make sure MongoDB is running and your `.env` is correctly configured.
-* For production, consider using a logging library instead of `console.log`.
-* Ensure proper error handling in the backend to handle database connection issues gracefully.
-
----
