@@ -3,18 +3,20 @@ import "./ProductSalesTable.css";
 
 function ProductSalesTable({ productData }) {
   const [currentPage, setCurrentPage] = useState(1);
+  const [customPage, setCustomPage] = useState("");
   const itemsPerPage = 5;
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = productData.slice(indexOfFirstItem, indexOfLastItem);
 
-  const totalPages = Math.ceil(productData.length / itemsPerPage);
+  const totalPages = Math.max(1, Math.ceil(productData.length / itemsPerPage));
 
   // clamp paginate to valid range
   const paginate = (pageNumber) => {
-    const page = Math.max(1, Math.min(totalPages, pageNumber));
+    const page = Math.max(1, Math.min(totalPages, Number(pageNumber) || 1));
     setCurrentPage(page);
+    setCustomPage("");
   };
 
   // return up to 3 page numbers, centered around currentPage when possible
@@ -26,6 +28,28 @@ function ProductSalesTable({ productData }) {
     if (start < 1) start = 1;
     if (start + 2 > totalPages) start = totalPages - 2;
     return [start, start + 1, start + 2];
+  };
+
+  const handleCustomChange = (e) => {
+    // allow only numbers and empty string
+    const val = e.target.value;
+    if (val === "" || /^\d+$/.test(val)) {
+      setCustomPage(val);
+    }
+  };
+
+  const handleCustomKey = (e) => {
+    if (e.key === "Enter") {
+      const num = Number(customPage);
+      if (num >= 1 && num <= totalPages) paginate(num);
+      else if (customPage !== "") paginate(num); // clamp will fix out-of-range
+    }
+  };
+
+  const handleGoClick = () => {
+    const num = Number(customPage);
+    if (!customPage) return;
+    paginate(num);
   };
 
   return (
@@ -61,7 +85,7 @@ function ProductSalesTable({ productData }) {
           </table>
 
           <div className="pst-pagination">
-            {/* optional Prev button */}
+            {/* Prev */}
             <button
               onClick={() => paginate(currentPage - 1)}
               className="pst-pageBtn"
@@ -71,6 +95,7 @@ function ProductSalesTable({ productData }) {
               ‹
             </button>
 
+            {/* visible pages (1 2 3 etc.) */}
             {getVisiblePages().map((number) => (
               <button
                 key={number}
@@ -82,7 +107,7 @@ function ProductSalesTable({ productData }) {
               </button>
             ))}
 
-            {/* optional Next button */}
+            {/* Next */}
             <button
               onClick={() => paginate(currentPage + 1)}
               className="pst-pageBtn"
@@ -91,6 +116,38 @@ function ProductSalesTable({ productData }) {
             >
               ›
             </button>
+
+            {/* custom page jump */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginLeft: 12 }}>
+              <input
+                className="pst-pageInput"
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                placeholder={`Sayfa (1-${totalPages})`}
+                value={customPage}
+                onChange={handleCustomChange}
+                onKeyDown={handleCustomKey}
+                aria-label="Özel sayfa numarası"
+                style={{
+                  width: 110,
+                  padding: '6px 8px',
+                  borderRadius: 8,
+                  border: '1px solid rgba(255,255,255,0.06)',
+                  background: 'rgba(255,255,255,0.02)',
+                  color: 'var(--text)',
+                }}
+              />
+              <button
+                onClick={handleGoClick}
+                className="pst-pageBtn pst-goBtn"
+                aria-label="Git"
+                disabled={!customPage}
+                title={`Git sayfa ${customPage}`}
+              >
+                Git
+              </button>
+            </div>
           </div>
         </div>
       ) : (
