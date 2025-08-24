@@ -14,9 +14,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB Atlas bağlantısı başarılı"))
-  .catch(err => console.error("❌ MongoDB bağlantı hatası:", err));
+mongoose.connect(process.env.MONGO_URI);
 
 // ------------------------
 // 0. Vendor bilgisi endpoint (frontend için gerekli)
@@ -48,8 +46,6 @@ app.get("/api/vendors/:vendorId/monthly-sales", async (req, res) => {
     const vendorProducts = await ParentProduct.find({ vendor: new mongoose.Types.ObjectId(vendorId) });
     const productIds = vendorProducts.map(p => p._id);
 
-    console.log(`Vendor ${vendorId} için bulunan ürün sayısı:`, productIds.length);
-
     // Aggregation ile Orders koleksiyonunu ay bazında grupla
     const monthlySales = await Order.aggregate([
       { $unwind: "$cart_item" },
@@ -72,7 +68,6 @@ app.get("/api/vendors/:vendorId/monthly-sales", async (req, res) => {
       { $sort: { "_id.year": 1, "_id.month": 1 } }
     ]);
 
-    console.log("Aylık satış verileri:", monthlySales);
     res.json(monthlySales);
   } catch (err) {
     console.error("Aylık satış hatası:", err);
@@ -90,8 +85,6 @@ app.get("/api/vendors/:vendorId/product-sales", async (req, res) => {
     // Önce bu vendor'ın ürünlerini bul
     const vendorProducts = await ParentProduct.find({ vendor: new mongoose.Types.ObjectId(vendorId) });
     const productIds = vendorProducts.map(p => p._id);
-
-    console.log(`Vendor ${vendorId} için ürün satış analizi yapılıyor...`);
 
     const productSales = await Order.aggregate([
       { $unwind: "$cart_item" },
@@ -123,7 +116,6 @@ app.get("/api/vendors/:vendorId/product-sales", async (req, res) => {
       { $sort: { totalRevenue: -1 } }
     ]);
 
-    console.log("Ürün satış verileri:", productSales);
     res.json(productSales);
   } catch (err) {
     console.error("Ürün satış hatası:", err);
@@ -159,4 +151,4 @@ app.get("/api/vendors/:vendorId/products", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server ${PORT} portunda çalışıyor`));
+app.listen(PORT);

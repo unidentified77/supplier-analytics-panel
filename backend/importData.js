@@ -8,7 +8,6 @@ import Order from './models/Order.js';
 dotenv.config();
 
 await mongoose.connect(process.env.MONGO_URI);
-console.log('✅ MongoDB bağlantısı başarılı');
 
 function safeObjectId(idObj) {
     return idObj && idObj.$oid ? new mongoose.Types.ObjectId(idObj.$oid) : undefined;
@@ -77,7 +76,6 @@ try {
     if (parentProductsFixed.length) await ParentProduct.insertMany(parentProductsFixed);
     if (ordersFixed.length) await Order.insertMany(ordersFixed);
 
-    console.log('🎉 Veriler başarıyla eklendi!');
     process.exit();
 } catch (err) {
     console.error(err);

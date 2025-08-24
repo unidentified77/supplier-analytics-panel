@@ -12,8 +12,5 @@ const vendorCount = await Vendor.countDocuments();
 const parentCount = await ParentProduct.countDocuments();
 const orderCount = await Order.countDocuments();
 
-console.log("Vendors:", vendorCount);
-console.log("Parent Products:", parentCount);
-console.log("Orders:", orderCount);
 
 process.exit();

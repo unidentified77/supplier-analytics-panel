@@ -17,18 +17,12 @@ function App() {
         setLoading(true);
         setError(null);
 
-        console.log('Fetching data for vendor:', vendorId);
-
         // 1. Aylık satışları çek
-        console.log('Fetching monthly sales...');
         const monthlyResponse = await axios.get(`http://localhost:5000/api/vendors/${vendorId}/monthly-sales`);
-        console.log('Monthly data:', monthlyResponse.data);
         setMonthlyData(monthlyResponse.data || []);
 
         // 2. Ürün bazlı satışları çek
-        console.log('Fetching product sales...');
         const productResponse = await axios.get(`http://localhost:5000/api/vendors/${vendorId}/product-sales`);
-        console.log('Product data:', productResponse.data);
         setProductData(productResponse.data || []);
 
       } catch (err) {
